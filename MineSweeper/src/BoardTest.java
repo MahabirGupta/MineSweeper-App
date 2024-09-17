@@ -31,7 +31,20 @@ public class BoardTest {
     @Test
     public void testGameLost() {
         Board board = new Board(4, 5);
-        board.revealCell(0, 0); // Assumes (0,0) has a mine
+
+        // Find a cell with a mine to reveal
+        boolean mineRevealed = false;
+        for (int i = 0; i < board.getSize(); i++) {
+            for (int j = 0; j < board.getSize(); j++) {
+                if (board.getCell(i, j).hasMine()) {
+                    board.revealCell(i, j);
+                    mineRevealed = true;
+                    break;
+                }
+            }
+            if (mineRevealed) break;
+        }
+
         assertTrue(board.isGameLost(), "Game should be marked as lost.");
     }
 

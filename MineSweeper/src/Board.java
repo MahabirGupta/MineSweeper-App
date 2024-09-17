@@ -58,20 +58,23 @@ public class Board {
     }
 
     public String revealCell(int row, int col) {
-        if (gameLost) return "Game over!";
+        if (gameLost) {
+            return "Game is already lost.";
+        }
 
         Cell cell = grid[row][col];
-        if (cell.isRevealed()) return "Cell already revealed!";
+        if (cell.isRevealed()) {
+            return "Cell is already revealed.";
+        }
 
         cell.setRevealed(true);
 
         if (cell.hasMine()) {
             gameLost = true;
-            return "Oh no, you detonated a mine! Game over.";
+            return "You hit a mine!";
         }
 
-        int adjacentMines = cell.getAdjacentMines();
-        if (adjacentMines == 0) {
+        if (cell.getAdjacentMines() == 0) {
             // Use BFS to reveal all connected empty cells
             Queue<int[]> queue = new LinkedList<>();
             queue.add(new int[] { row, col });
@@ -92,11 +95,13 @@ public class Board {
                     }
                 }
             }
-            return "This square contains 0 adjacent mines.";
-        } else {
-            return "This square contains " + adjacentMines + " adjacent mines.";
         }
+
+        // If the cell is revealed and no mine is hit, check if it has adjacent mines
+        return cell.getAdjacentMines() == 0 ? "This square contains 0 adjacent mines." : "Cell revealed!";
     }
+
+
 
     public boolean isGameWon() {
         for (int i = 0; i < size; i++) {
