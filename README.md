@@ -34,6 +34,13 @@ Write a program that simulates a Minesweeper game on a square grid.
 
 - Additionally, the program should track the user's progress throughout the game, displaying the minefield after each user input.
 
+- Steps to run the application Using terminal or command propmt
+
+Navigate to MineSweeper-App/MineSweeper/bin/main/java
+Run the following command to run the application java main.java.MineSweeperGame
+
+Using intellij IDE From the MindSweeperGame class in src/main/java/MineSweeperGame.java click on the green play button
+
 ## Game play
 
 ### Sucess example
