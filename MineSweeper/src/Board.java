@@ -1,6 +1,4 @@
 import java.util.Random;
-
-import java.util.Random;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -49,6 +47,10 @@ public class Board {
                 }
             }
         }
+    }
+
+    public int getSize() {
+        return size;
     }
 
     public Cell getCell(int row, int col) {
