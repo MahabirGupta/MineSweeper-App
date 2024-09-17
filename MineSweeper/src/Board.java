@@ -1,13 +1,19 @@
 import java.util.Random;
 
+import java.util.Random;
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class Board {
     private Cell[][] grid;
     private int size;
     private int totalMines;
+    private boolean gameLost;
 
     public Board(int size, int mines) {
         this.size = size;
         this.totalMines = mines;
+        this.gameLost = false;
         grid = new Cell[size][size];
         initializeBoard();
         placeMines();
@@ -50,20 +56,80 @@ public class Board {
     }
 
     public void revealCell(int row, int col) {
-        // Add reveal logic, including recursion for empty cells
+        if (gameLost) return;
+
+        Cell cell = grid[row][col];
+        if (cell.isRevealed()) return;
+
+        cell.setRevealed(true);
+
+        if (cell.hasMine()) {
+            gameLost = true;
+            return;
+        }
+
+        if (cell.getAdjacentMines() == 0) {
+            // Use BFS to reveal all connected empty cells
+            Queue<int[]> queue = new LinkedList<>();
+            queue.add(new int[] { row, col });
+
+            while (!queue.isEmpty()) {
+                int[] current = queue.poll();
+                int r = current[0];
+                int c = current[1];
+
+                for (int i = Math.max(0, r - 1); i <= Math.min(size - 1, r + 1); i++) {
+                    for (int j = Math.max(0, c - 1); j <= Math.min(size - 1, c + 1); j++) {
+                        if (!grid[i][j].isRevealed() && !grid[i][j].hasMine()) {
+                            grid[i][j].setRevealed(true);
+                            if (grid[i][j].getAdjacentMines() == 0) {
+                                queue.add(new int[] { i, j });
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public boolean isGameWon() {
-        // Add win condition check
-        return false;
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                Cell cell = grid[i][j];
+                if (!cell.hasMine() && !cell.isRevealed()) {
+                    return false; // There's at least one non-mine cell that isn't revealed
+                }
+            }
+        }
+        return true;
     }
 
     public boolean isGameLost() {
-        // Add loss condition check
-        return false;
+        return gameLost;
     }
 
     public void printBoard() {
-        // Add code to print the current state of the board
+        System.out.print("  ");
+        for (int i = 1; i <= size; i++) {
+            System.out.print(i + " ");
+        }
+        System.out.println();
+
+        for (int i = 0; i < size; i++) {
+            System.out.print((char) ('A' + i) + " ");
+            for (int j = 0; j < size; j++) {
+                Cell cell = grid[i][j];
+                if (cell.isRevealed()) {
+                    if (cell.hasMine()) {
+                        System.out.print("* ");
+                    } else {
+                        System.out.print(cell.getAdjacentMines() + " ");
+                    }
+                } else {
+                    System.out.print("_ ");
+                }
+            }
+            System.out.println();
+        }
     }
 }
