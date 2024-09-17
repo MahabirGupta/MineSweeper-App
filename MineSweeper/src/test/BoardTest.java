@@ -1,4 +1,9 @@
+package test;
+
 import static org.junit.jupiter.api.Assertions.*;
+
+import main.java.Board;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class BoardTest {
@@ -6,7 +11,7 @@ public class BoardTest {
     @Test
     public void testBoardInitialization() {
         Board board = new Board(4, 5);
-        assertEquals(4, board.getSize(), "Board size should be 4.");
+        Assertions.assertEquals(4, board.getSize(), "main.java.Board size should be 4.");
         // Additional assertions to check mine placement and board initialization
         int mineCount = 0;
         for (int i = 0; i < board.getSize(); i++) {
@@ -16,7 +21,7 @@ public class BoardTest {
                 }
             }
         }
-        assertEquals(5, mineCount, "Board should contain exactly 5 mines.");
+        assertEquals(5, mineCount, "main.java.Board should contain exactly 5 mines.");
     }
 
     @Test
@@ -24,7 +29,7 @@ public class BoardTest {
         Board board = new Board(4, 5);
         board.revealCell(1, 1);
         // Check if cell is revealed
-        assertTrue(board.getCell(1, 1).isRevealed(), "Cell (1,1) should be revealed.");
+        Assertions.assertTrue(board.getCell(1, 1).isRevealed(), "main.java.Cell (1,1) should be revealed.");
         // Additional checks can include board state after revealing
     }
 
@@ -45,7 +50,7 @@ public class BoardTest {
             if (mineRevealed) break;
         }
 
-        assertTrue(board.isGameLost(), "Game should be marked as lost.");
+        Assertions.assertTrue(board.isGameLost(), "Game should be marked as lost.");
     }
 
     @Test
@@ -59,7 +64,7 @@ public class BoardTest {
                 }
             }
         }
-        assertTrue(board.isGameWon(), "Game should be marked as won.");
+        Assertions.assertTrue(board.isGameWon(), "Game should be marked as won.");
     }
 
     @Test

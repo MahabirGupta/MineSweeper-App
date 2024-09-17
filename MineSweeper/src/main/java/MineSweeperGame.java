@@ -1,3 +1,7 @@
+package main.java;
+
+import main.java.Board;
+
 import java.util.Scanner;
 
 public class MineSweeperGame {

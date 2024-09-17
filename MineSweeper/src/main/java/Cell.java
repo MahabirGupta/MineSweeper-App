@@ -1,3 +1,5 @@
+package main.java;
+
 public class Cell {
     private boolean hasMine;
     private int adjacentMines;

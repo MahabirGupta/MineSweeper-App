@@ -1,3 +1,5 @@
+package main.java;
+
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
@@ -64,7 +66,7 @@ public class Board {
 
         Cell cell = grid[row][col];
         if (cell.isRevealed()) {
-            return "Cell is already revealed.";
+            return "main.java.Cell is already revealed.";
         }
 
         cell.setRevealed(true);
@@ -98,7 +100,7 @@ public class Board {
         }
 
         // If the cell is revealed and no mine is hit, check if it has adjacent mines
-        return cell.getAdjacentMines() == 0 ? "This square contains 0 adjacent mines." : "Cell revealed!";
+        return cell.getAdjacentMines() == 0 ? "This square contains 0 adjacent mines." : "main.java.Cell revealed!";
     }
 
 

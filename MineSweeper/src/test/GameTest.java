@@ -1,13 +1,19 @@
+package test;
+
 import static org.junit.jupiter.api.Assertions.*;
+
+import main.java.Board;
+import main.java.Cell;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class GameTest {
     @Test
     public void testCellInitialization() {
         Cell cell = new Cell();
-        assertFalse(cell.hasMine());
-        assertEquals(0, cell.getAdjacentMines());
-        assertFalse(cell.isRevealed());
+        Assertions.assertFalse(cell.hasMine());
+        Assertions.assertEquals(0, cell.getAdjacentMines());
+        Assertions.assertFalse(cell.isRevealed());
     }
 
     @Test
