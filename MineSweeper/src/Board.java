@@ -1,6 +1,6 @@
-import java.util.Random;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Random;
 
 public class Board {
     private Cell[][] grid;
@@ -57,20 +57,21 @@ public class Board {
         return grid[row][col];
     }
 
-    public void revealCell(int row, int col) {
-        if (gameLost) return;
+    public String revealCell(int row, int col) {
+        if (gameLost) return "Game over!";
 
         Cell cell = grid[row][col];
-        if (cell.isRevealed()) return;
+        if (cell.isRevealed()) return "Cell already revealed!";
 
         cell.setRevealed(true);
 
         if (cell.hasMine()) {
             gameLost = true;
-            return;
+            return "Oh no, you detonated a mine! Game over.";
         }
 
-        if (cell.getAdjacentMines() == 0) {
+        int adjacentMines = cell.getAdjacentMines();
+        if (adjacentMines == 0) {
             // Use BFS to reveal all connected empty cells
             Queue<int[]> queue = new LinkedList<>();
             queue.add(new int[] { row, col });
@@ -91,6 +92,9 @@ public class Board {
                     }
                 }
             }
+            return "This square contains 0 adjacent mines.";
+        } else {
+            return "This square contains " + adjacentMines + " adjacent mines.";
         }
     }
 
